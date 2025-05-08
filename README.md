@@ -37,9 +37,42 @@ Makefile~cmd(date)까지
 - Makefile 최하단에
 -       clean:
         (tab)rm –f *.o test1 test2 t1 t2 // 모든 실행파일 이름을 기술할 것
-- 추가
 - 매크로 상수 : 기존 Makefile의 맨 앞에 상수를 정의
 -       (최상단)이름 = 파일들
 - 사용시 : $(이름)
-# cmd 
-- 향후 업댓 예정
+# cmd  
+- 우선 지금까지 구현한 명령어들은 하나의 구조체에 배열의 원소로써 저장됨
+- 즉 cmd_tbl_t 이라는 구조체의 배열은 각각의 정보를 담고있는 원소를 가짐
+
+|이름|처리함수이름|인자개수|옵션|
+|:---:|:---:|:---:|:---:|
+|cd|cd|AC_LESS_1|NULL|
+|chmod|changemod|2|NULL|
+|cp|cp|2|NULL|
+|date|date|0|NULL|
+|echo|echo|AC_ANY|NULL|
+|exit|quit|0|NULL|
+|help|help|0|NULL|
+|hostname|hostname|0|NULL|
+|id|id|AC_LESS_1|NULL|
+|ln|ln|2|-s|
+|ls|ls|AC_LESS_1|-l|
+|mkdir|makedir|1|NULL|
+|mv|mv|2|NULL|
+|pwd|pwd|0|NULL|
+|rm|rm|1|NULL|
+|rmdir|removedir|1|NULL|
+|uname|unixname|0|-a|
+|whoami|whoami|0|NULL|
+
+- 각 명령어에 대한 설명은 cmd.c 파일을 다운로드하여 AI에게 질문할것
+
+## 전체적인 흐름
+- 
+
+
+
+
+
+
+
