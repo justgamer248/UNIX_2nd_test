@@ -81,7 +81,7 @@ Makefile~cmd(date)까지
 10. 4로 이동↑
 
 - get_argv_optv함수
-1. cmd_line의 시작 주소를 입력 받는다.
+1. cmd_line의 시작 주소를 받는다.
 2. 잘라낸 문자열의 시작 주소를 담을 tok와 전역 변수 argc와 optc를 0으로 초기화
 3. if의 조건문에서 전역변수cmd에 strtok를 통해 (공백||탭||엔터)로 구분한 첫단어를 대입
 4. 그냥 엔터만 친 경우 NULL리턴 
