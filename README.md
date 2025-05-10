@@ -44,6 +44,14 @@ Makefile~cmd(date)까지
 - 우선 지금까지 구현한 명령어들은 하나의 구조체에 배열의 원소로써 저장됨
 - 즉 cmd_tbl_t 이라는 구조체의 배열은 각각의 정보를 담고있는 원소를 가짐
 
+-       typedef struct{
+            char *cmd;          // 첫단어
+            void (*func)(void); // 함수 이름
+            int argc;           // 인자 개수
+            char *opt;          // 옵션 문자
+            char *arg;          // 사용법 출력시 출력할 내용
+       } cmd_tbl_t;
+    
 |이름|처리함수이름|인자개수|옵션|
 |:---:|:---:|:---:|:---:|
 |cd|cd|AC_LESS_1|NULL|
