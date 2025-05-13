@@ -185,7 +185,7 @@ Makefile~cmd(date)까지
 -     if(?????(argv[0]) < 0)
 		PRINT_ERR_RET();
 15. unixname함수에 들어갈 내용은?
--     truct utsname un;
+-     struct utsname un;
       uname(&un);
 
       printf("%s", ?????????);
