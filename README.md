@@ -77,8 +77,32 @@ Makefile~cmd(date)까지
 - 각 명령어에 대한 설명은 cmd.c 파일을 다운로드하여 AI에게 질문할것
 
 ## 전체적인 흐름 (소스 파일을 같이 볼 것)
+
+- 전역 변수
+
+|변수|역활|
+|:---:|:---:|
+|*cmd|입력한 라인의 첫단어|
+|*argv[100]|입력한 라인의 두번째 단어 부터의 배열|
+|*optv[10]|옵션을 저장하는 배열|
+|argc|단어 카운터|
+|optc|옵션 카운터|
+|cur_work_dir[SZ_STR_BUF]|현재 작업 디렉토리 이름을 저장|
+|num_cmd|총 명령어 개수|
+
+- 메크로 상수 && 함수
+
+|변수 or 함수|역활|
+|:---:|:---:|
+|SZ_STR_BUF|256만큼의 문자열 길이|
+|PRINT_ERR_RET()|perror()를 통해 에러 출력|
+|EQUAL(_s1, _s2)|strcmp를 통해 같으면 true|
+|NOT_EQUAL(_s1, _s2)|strcmp를 통해 다르면 true|
+|AC_LESS_1|-1 명령어 인자 개수가 0 또는 1인 경우|
+|AC_ANY|-100 명령어 인자 개수가 제한 없는 경우(echo)|
+
 - main함수
-1. cmd 라인과 카운터를 선언한다.
+1. cmd_line 과 카운터를 선언한다.
 2. setbuf함수를 통해 출력, 에러 버퍼를 제거한다. (즉시 출력함)
 3. help를 통해 명령어 리스트 출력
 4. for문(무한 반복)
@@ -88,6 +112,11 @@ Makefile~cmd(date)까지
 8. 다음 if의 경우 get_argv_optv(cmd_line)를 통해 유효성 확인
 9. NULL이 아니면 proc_cmd를 통해 명령어를 처리하고 cmd_count증가
 10. 4로 이동↑
+
+|변수|역활|
+|:---:|:---:|
+|cmd_line[SZ_STR_BUF]|SZ_STR_BUF만큼 명령어 라인 저장|
+|cmd_count|입력한 명령어 카운트|
 
 - get_argv_optv함수
 1. cmd_line의 시작 주소를 받는다.
@@ -99,9 +128,17 @@ Makefile~cmd(date)까지
 7. 그 외의 경우 argv[argc]에 저장 및 argc 1증가
 8. 반복문 탈출후 첫단어(cmd) 주소 반환
 
+|변수|역활|
+|:---:|:---:|
+|*tok|첫단어|
+
 - progcmd함수
 1. 변수k 선언
 2. for문은 num_cmd만큼 실행됨 num_cmd는 전역 변수로 cmd_tbl의 원소개수 임
 3. 만일 cmd와 cmd_tbl[k].cmd중 하나라도 일치하지 않는다면 지원되지 않음 출력
 4. 일치하는 경우 check_arg와 check_opt를 통해 하나라도 잘못되면 print_usage에서 사용법 출력 및 종료
 5. 그 외의 경우(정상) 해당하는 함수 호출 및 종료
+
+|변수|역활|
+|:---:|:---:|
+|k|for문 제어용 변수|
