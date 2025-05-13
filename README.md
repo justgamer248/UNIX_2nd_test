@@ -109,7 +109,7 @@ Makefile~cmd(date)까지
 5. 명령 프롬프트를 형식에 맞게 출력
 6. if의 조건문 안쪽에 fgets를 통해 cmd_line에 저장
 7. 만일 NULL인 경우 탈출
-8. 다음 if의 경우 get_argv_optv(cmd_line)를 통해 유효성 확인
+8. 다음 if의 경우 get_argv_optv(cmd_line)를 통해 단어를 자름
 9. NULL이 아니면 proc_cmd를 통해 명령어를 처리하고 cmd_count증가
 10. 4로 이동↑
 
@@ -118,7 +118,7 @@ Makefile~cmd(date)까지
 |cmd_line[SZ_STR_BUF]|SZ_STR_BUF만큼 명령어 라인 저장|
 |cmd_count|입력한 명령어 카운트|
 
-### get_argv_optv함수 (cmd_line의 유효성 확인)
+### get_argv_optv함수 (cmd_line자르기)
 1. cmd_line의 시작 주소를 받는다.
 2. 잘라낸 문자열의 시작 주소를 담을 tok와 전역 변수 argc와 optc를 0으로 초기화
 3. if의 조건문에서 전역변수cmd에 strtok를 통해 (공백||탭||엔터)로 구분한 첫단어를 대입
@@ -132,7 +132,7 @@ Makefile~cmd(date)까지
 |:---:|:---:|
 |*tok|첫단어|
 
-### progcmd함수 (실질적인 실행)
+### progcmd함수 (유효성 확인)
 1. 변수k 선언
 2. for문은 num_cmd만큼 실행됨 num_cmd는 전역 변수로 cmd_tbl의 원소개수 임
 3. 만일 cmd와 cmd_tbl[k].cmd중 하나라도 일치하지 않는다면 지원되지 않음 출력
