@@ -78,7 +78,7 @@ Makefile~cmd(date)까지
 
 ## 전체적인 흐름 (소스 파일을 같이 볼 것)
 
-- 전역 변수
+### 전역 변수
 
 |변수|역활|
 |:---:|:---:|
@@ -90,7 +90,7 @@ Makefile~cmd(date)까지
 |cur_work_dir[SZ_STR_BUF]|현재 작업 디렉토리 이름을 저장|
 |num_cmd|총 명령어 개수|
 
-- 메크로 상수 & 함수
+### 메크로 상수 & 함수
 
 |변수 or 함수|역활|
 |:---:|:---:|
@@ -101,7 +101,7 @@ Makefile~cmd(date)까지
 |AC_LESS_1|-1 명령어 인자 개수가 0 또는 1인 경우|
 |AC_ANY|-100 명령어 인자 개수가 제한 없는 경우(echo)|
 
-- main함수
+### main함수
 1. cmd_line 과 카운터를 선언한다.
 2. setbuf함수를 통해 출력, 에러 버퍼를 제거한다. (즉시 출력함)
 3. help를 통해 명령어 리스트 출력
@@ -118,7 +118,7 @@ Makefile~cmd(date)까지
 |cmd_line[SZ_STR_BUF]|SZ_STR_BUF만큼 명령어 라인 저장|
 |cmd_count|입력한 명령어 카운트|
 
-- get_argv_optv함수 (cmd_line의 유효성 확인)
+### get_argv_optv함수 (cmd_line의 유효성 확인)
 1. cmd_line의 시작 주소를 받는다.
 2. 잘라낸 문자열의 시작 주소를 담을 tok와 전역 변수 argc와 optc를 0으로 초기화
 3. if의 조건문에서 전역변수cmd에 strtok를 통해 (공백||탭||엔터)로 구분한 첫단어를 대입
@@ -132,7 +132,7 @@ Makefile~cmd(date)까지
 |:---:|:---:|
 |*tok|첫단어|
 
-- progcmd함수 (실질적인 실행)
+### progcmd함수 (실질적인 실행)
 1. 변수k 선언
 2. for문은 num_cmd만큼 실행됨 num_cmd는 전역 변수로 cmd_tbl의 원소개수 임
 3. 만일 cmd와 cmd_tbl[k].cmd중 하나라도 일치하지 않는다면 지원되지 않음 출력
@@ -142,3 +142,80 @@ Makefile~cmd(date)까지
 |변수|역활|
 |:---:|:---:|
 |k|for문 제어용 변수|
+
+# 나올 만한 문제 (각 함수별로 1개씩)
+
+- 정답은 끝에 있음
+
+1. cd함수에 들어갈 내용은?
+-     pwp = getpwuid(????);
+2. changemod함수는 이미 ???이라는 유닉스 함수가 존재하기 때문에 이름을 바꿨다.
+3. date함수에 들어갈 내용은?
+-     char stm[128];
+      time_t ttm = time(NULL);
+      struct tm *??? = localtime(&ttm);
+4. echo함수에 들어갈 내용은?
+-     for(int i=0; i<????; i++) printf("%s ", argv[i]);
+      printf("\n");
+5. hostname함수에 들어갈 내용은?
+-     char hostname[SZ_STR_BUF];
+      ??????(hostname, SZ_STR_BUF);
+      printf("%s\n", hostname);
+6. id함수에 들어갈 내용은?
+-     struct ????? *pwp;
+      struct ????? *grp;
+7. ln함수에 들어갈 내용은?
+-     if( ((???? != 0) ? symlink(argv[0], argv[1]) : link(argv[0], argv[1])) < 0)
+		PRINT_ERR_RET();
+8. ls함수에 들어갈 내용은?
+-     // 디렉토리 이름을 주지 않았다면 현재 디렉토리 설정
+      path = (???? == 0)? ".": argv[0];
+9. mkkedir함수에 들어갈 내용은?
+-     if((link(argv[0], argv[1]) < 0) || (unlink(argv[0]) < 0))
+		???????????;
+10. mv함수에 들어갈 내용은?
+-     if((link(argv[0], argv[1]) < 0) || (???????(argv[0]) < 0))
+		PRINT_ERR_RET();
+11. pwd함수에 들어갈 내용은?
+-     printf("%s\n", ?????);
+12. exit함수는 이미 존재 한다. 그러므로 ???을 함수 이름으로 정의한다.
+13. rm함수에 들어갈 내용은?
+-     struct ???? buf;
+14. removedir함수에 들어갈 내용은?
+-     if(?????(argv[0]) < 0)
+		PRINT_ERR_RET();
+15. unixname함수에 들어갈 내용은?
+-     truct utsname un;
+      uname(&un);
+
+      printf("%s", ?????????);
+16. whoami함수에 들어갈 내용은?
+-     struct passwd *pwp;
+      pwp = ??????(getuid());
+17. help함수에 들어갈 내용은?
+-     int  k;
+
+      printf("현재 지원되는 명령어 종류입니다.\n");
+      for (k = 0; k < ???????; ++k)
+		print_usage("  ", cmd_tbl[k].cmd, cmd_tbl[k].opt, cmd_tbl[k].arg);
+      printf("\n");
+
+## 정답
+
+1. getuid()
+2. chmod()
+3. ltm
+4. argc
+5. gethostname
+6. passwd, group
+7. optc
+8. argc
+9. PRINT_ERR_RET();
+10. unlink
+11. cur_work_dir
+12. quit
+13. stat
+14. rmdir
+15. un.sysname
+16. getpwuid
+17. num_cmd
