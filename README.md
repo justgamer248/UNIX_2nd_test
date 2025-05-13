@@ -145,7 +145,7 @@ Makefile~cmd(date)까지
 
 # 나올 만한 문제 (각 함수별로 1개씩)
 
-- 정답은 끝에 있음
+- <span style="color:red">정답은 끝에 있음</span>
 
 1. cd함수에 들어갈 내용은?
 -     pwp = getpwuid(????);
