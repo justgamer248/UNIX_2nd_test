@@ -90,7 +90,7 @@ Makefile~cmd(date)까지
 |cur_work_dir[SZ_STR_BUF]|현재 작업 디렉토리 이름을 저장|
 |num_cmd|총 명령어 개수|
 
-- 메크로 상수 && 함수
+- 메크로 상수 & 함수
 
 |변수 or 함수|역활|
 |:---:|:---:|
@@ -118,7 +118,7 @@ Makefile~cmd(date)까지
 |cmd_line[SZ_STR_BUF]|SZ_STR_BUF만큼 명령어 라인 저장|
 |cmd_count|입력한 명령어 카운트|
 
-- get_argv_optv함수
+- get_argv_optv함수 (cmd_line의 유효성 확인)
 1. cmd_line의 시작 주소를 받는다.
 2. 잘라낸 문자열의 시작 주소를 담을 tok와 전역 변수 argc와 optc를 0으로 초기화
 3. if의 조건문에서 전역변수cmd에 strtok를 통해 (공백||탭||엔터)로 구분한 첫단어를 대입
@@ -132,7 +132,7 @@ Makefile~cmd(date)까지
 |:---:|:---:|
 |*tok|첫단어|
 
-- progcmd함수
+- progcmd함수 (실질적인 실행)
 1. 변수k 선언
 2. for문은 num_cmd만큼 실행됨 num_cmd는 전역 변수로 cmd_tbl의 원소개수 임
 3. 만일 cmd와 cmd_tbl[k].cmd중 하나라도 일치하지 않는다면 지원되지 않음 출력
